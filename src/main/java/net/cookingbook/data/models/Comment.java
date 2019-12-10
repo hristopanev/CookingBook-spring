@@ -7,7 +7,6 @@ import java.util.List;
 @Entity
 @Table(name = "comments")
 public class Comment extends BaseEntity {
-//TODO MUST MAKE LIST<USER> AND LIST<POST> !!!
     private String description;
     private Date commentDate;
     private List<User> userComment;

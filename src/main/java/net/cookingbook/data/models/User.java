@@ -7,9 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-//TODO
-// FOR USER PROFILE DETAILS MUST ADDED BOOLEAN - FOLLOW
-
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity implements UserDetails {

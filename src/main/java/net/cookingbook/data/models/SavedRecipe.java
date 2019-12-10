@@ -27,12 +27,6 @@ public class SavedRecipe extends BaseEntity {
         this.user = user;
     }
 
-//    @ManyToMany(targetEntity = Post.class)
-//    @JoinTable(
-//            name = "saved_user_recipes",
-//            joinColumns = @JoinColumn(name = "saved_recipes_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id")
-//    )
     @OneToOne(targetEntity = Post.class)
     public Post getPost() {
         return this.post;
