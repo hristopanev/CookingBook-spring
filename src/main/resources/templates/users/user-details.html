@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="fragments/head"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:include="fragments/navbar"></th:block>
+</header>
+<main>
+    <div class="text-center mt-3">
+        <h1 th:utext="${userProfile}"></h1>
+    </div>
+    <div class="home-page-container row">
+        <div class="home-box  col-lg-2">
+            <ul>
+                <li class="profile-pic">
+                    <div class="text-center">
+                        <th:block th:if="${profileImage == null}">
+                            <img src="/image/user.jpg" class="img-thumbnail" width="150" height="150" >
+
+                        </th:block>
+                        <th:block th:unless="${profileImage == null}">
+                            <img th:src="${profileImage}" class="img-thumbnail" width="150" height="150">
+                        </th:block>
+                    </div>
+                    <br>
+                </li>
+                <li>
+                    <div class="text-center">
+                        <th:block th:if="${isFriends == false}">
+                            <form th:action="@{/users/follow/{id}(id=${userID})}" th:method="post">
+                                <!--                          action="#{homeBean.addFriend(model.id)}"-->
+                                <button class="btn btn-info" value="Add Friend">Follow</button>
+                            </form>
+                        </th:block>
+
+                        <th:block th:unless="${isFriends == false}">
+                            <form th:action="@{/users/delete-follow/{id}(id=${userID})}" th:method="post">
+                                <!--                          action="#{homeBean.addFriend(model.id)}"-->
+                                <button class="btn btn-danger" value="Delete Friend">Delete Follow</button>
+                            </form>
+                        </th:block>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="home-page offset-lg-1 col-lg-6">
+            <th:block th:each="post, iter : ${userDetails}">
+                <div class="container home-page-posts justify-content-around">
+                    <div>
+                        <h5 class="text-center" th:utext="${post.postTime}"></h5>
+                        <h5 class="text-center" th:utext="${post.name}"></h5>
+                        <img th:src="${post.imageUrl}" class="img-thumbnail" width="300" height="300">
+                        <ul>
+                            <li><a th:href="@{/posts/details/{id}(id=${post.id})}" class="btn btn-info">Details</a></li>
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <li><a th:href="@{/posts/delete/{id}(id=${post.id})}" class="btn btn-danger">Delete</a></li>
+                                <li><a th:href="@{/posts/edit/{id}(id=${post.id})}" class="btn btn-success">Edit</a></li>
+                            </th:block>
+                        </ul>
+                    </div>
+                </div>
+                <br>
+                <hr class="my-3">
+                <br>
+            </th:block>
+        </div>
+    </div>
+</main>
+
+<th:block th:include="fragments/footer"></th:block>
+
+</body>
+</html>

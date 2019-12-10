@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="fragments/head"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:include="fragments/navbar"></th:block>
+</header>
+<main>
+    <div class="text-center mt-3">
+        <hr class="hr-2 bg-dark w-25">
+        <h1 th:utext="${description}"></h1>
+        <hr class="hr-2 bg-dark w-25">
+    </div>
+    <div class="home-page-container row">
+        <div class="home-box  col-lg-2">
+            <ul>
+                <li class="profile-pic">
+                <li>
+                    <div class="text-center">
+                        <th:block th:if="${isJoined == false}">
+                            <form th:action="@{/groups/join/{id}(id=${groupID})}" th:method="post">
+                                <button class="btn btn-info" value="Join in Group">Join in Group</button>
+                            </form>
+                        </th:block>
+
+                        <th:block th:unless="${isJoined == false}">
+                            <form th:action="@{/groups/edit/{id}(id=${groupID})}" th:method="get">
+                                <button class="btn btn-success" value="Edit Group">Edit Group</button>
+                            </form>
+                            <br>
+                            <form th:action="@{/groups/create-post/{id}(id=${groupID})}" th:method="get">
+                                <button class="btn btn-success" value="Create Post">Create Post</button>
+                            </form>
+                            <br>
+                            <form th:action="@{/groups/delete/{id}(id=${groupID})}" th:method="post">
+                                <button class="btn btn-danger" value="Delete Group">Delete Group</button>
+                            </form>
+                            <br>
+                            <form th:action="@{/groups/leave/{id}(id=${groupID})}" th:method="post">
+                                <button class="btn btn-danger" value="Leave Group">Leave Group</button>
+                            </form>
+                        </th:block>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="home-page offset-lg-1 col-lg-6">
+            <th:block th:each="post, iter : ${posts}">
+                <div class="container home-page-posts justify-content-around">
+                    <div>
+
+                        <th:block th:if="${userID == post.uploader.id}">
+                            <a class="post-username" th:href="@{/users/profile}" th:utext="${post.uploader.username}"></a>
+                        </th:block>
+                        <th:block th:unless="${userID == post.uploader.id}">
+                            <a class="post-username" th:href="@{/users/details/{id}(id=${post.uploader.id})}"
+                               th:utext="${post.uploader.username}"></a>
+                        </th:block>
+                        <!--                        <h5 class="text-center" th:utext="${#strings.substring(post.postTime, 0,10)}"></h5>-->
+                        <h5 class="text-center" th:utext="${#dates.format(post.postTime, 'dd-MM-yyyy')}"></h5>
+                        <h5 class="text-center" th:utext="${post.name}"></h5>
+                        <img th:src="${post.imageUrl}" class="img-thumbnail" width="300" height="300">
+                        <ul>
+                            <li><a th:href="@{/posts/details/{id}(id=${post.id})}" class="btn btn-info">Details</a></li>
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <li><a th:href="@{/posts/delete/{id}(id=${post.id})}" class="btn btn-danger">Delete</a></li>
+                                <li><a th:href="@{/posts/edit/{id}(id=${post.id})}" class="btn btn-success">Edit</a></li>
+                            </th:block>
+                        </ul>
+                    </div>
+                </div>
+                <br>
+                <hr class="my-3">
+                <br>
+            </th:block>
+        </div>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

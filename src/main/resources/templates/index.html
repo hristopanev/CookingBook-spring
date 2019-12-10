@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/guest-navbar}"></th:block>
+</header>
+<main>
+    <main>
+        <div class="index-main">
+            <div class="row">
+                <div class="content welcome offset-lg-4 col-lg-3">
+                    <h1 class="text-info">Welcome to CookingBook</h1>
+                </div>
+
+                <div class="register-form offset-lg-1 col-lg-4">
+                    <h1 class="content-center">Register</h1>
+                    <th:block th:include="~{users/register}"></th:block>
+                </div>
+            </div>
+
+            <div class="row pt-5">
+                <div class="page-info register-form content  offset-lg-2 col-lg-7">
+                    <h1>-- Post and share your cooking recipe --</h1>
+                    <h1>-- Follow your friends --</h1>
+                    <h1>-- Save your loved recipe --</h1>
+                    <h1>-- Make your buy notes --</h1>
+                </div>
+            </div>
+        </div>
+    </main>
+</main>
+
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+
+</footer>
+</body>
+</html>

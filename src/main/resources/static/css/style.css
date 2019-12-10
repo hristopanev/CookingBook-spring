@@ -1,0 +1,150 @@
+.home {
+    padding: 1rem 1rem;
+}
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+body, html {
+    height: 100%;
+}
+
+.index-main {
+    background-image: url("/image/index-backround.jpg");
+    height: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 2rem 2rem;
+}
+
+.home-page-container {
+    padding-top: 1rem;
+}
+
+.home-page {
+    /* margin: 0 auto;
+    width: 60%;
+    border-right: 1px solid #28a745;
+    border-left: 1px solid #28a745; */
+    box-shadow: 0px 0px 38px -4px rgba(105,255,123,1);
+    padding: 3rem;
+}
+
+.home-page-admin {
+    margin: 0 auto;
+    width: 80%;
+    /* border-right: 1px solid #28a745;
+    border-left: 1px solid #28a745; */
+    box-shadow: 0px 0px 38px -4px rgba(105,255,123,1);
+    padding: 3rem;
+}
+
+.home-box {
+    text-align: center;
+    padding: 2rem 2rem;
+}
+
+/* Post Username */
+
+.post-username {
+    color: darkcyan;
+}
+
+.name-group {
+    background: #343A40;
+    color: green;
+    border-radius: 10px;
+}
+
+.name-group-cell {
+    background: #CCF8C8;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.name-group-cell>a {
+    color: darkcyan;
+}
+
+/*.home-box table {*/
+/*    border: 2px solid #C2FFCA;*/
+/*}*/
+
+.navbar {
+    padding: 0.3rem 1rem;
+}
+
+#navbarNav > ul {
+    margin-bottom: 0;
+}
+
+#navbarResponsive > ul > li > a {
+    color: #0d9640;
+}
+.search {
+    margin: 0 auto;;
+}
+
+
+#groupDropdown, #adminDropdown, #userDropdown, #postDropdown, .text-home-form {
+    color: #128841;
+}
+
+/* FOOTER */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+
+/* Notes */
+
+.home-page-notes {
+    padding: 3rem;
+}
+
+.notes-form {
+    background-color: #F8E877;
+    box-shadow:  10px 10px 69px 3px rgba(248,232,119,1);
+
+}
+
+/*Button Rate */
+
+.rate-recipe > button {
+    color: #0d9640;
+    display: flex;
+    padding: 0 2rem;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+.rate-recipe > button > i {
+    margin: auto;
+}
+
+.rate-recipe > button > h5 {
+    margin: auto;
+    padding: 0 0.5rem;
+}
+
+/*Media Query*/
+
+@media (max-width: 760px) {
+
+    .home-page, .home-page-notes {
+        padding: 0;
+    }
+    #group-form {
+        display: none;
+    }
+
+    .table-form {
+        display: none;
+    }
+}

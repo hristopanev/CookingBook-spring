@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+<main>
+    <div class="home-page">
+        <div class="recept-form container">
+            <div class="home-page">
+                <hr class="my-3"/>
+                <div class="text-center mb-4">
+                    <h1>Recipe Details</h1>
+                </div>
+                <hr class="my-3">
+                <div class="container-fluid">
+                    <div class="row justify-content-center text-center">
+                        <div>
+                            <div class="label mt-2">
+                                <h4 class="text-center" th:text="${post.name}"></h4>
+                            </div>
+                            <div class="label mt-4 text-center">
+                                <img th:src="${post.imageUrl}" class="img-thumbnail" width="300" height="300"
+                                     alt="Post">
+                            </div>
+
+                            <div class="label mt-4">
+                                <h2 class="text-center">Products:</h2>
+                                <textarea class="justify-content-between" cols="41" rows="5" th:text="${post.products}"
+                                          disabled></textarea>
+                            </div>
+                            <div class="label mt-4">
+                                <h2 class="text-center">Description:</h2>
+                                <textarea class="text-center" cols="41" rows="10" th:text="${post.description}"
+                                          disabled></textarea>
+                            </div>
+                            <br>
+
+                                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <div class="text-center">
+                                    <a th:href="@{/posts/delete/{id}(id=${postID})}" class="btn btn-danger">Delete</a>
+                                    <a th:href="@{/posts/edit/{id}(id=${postID})}" class="btn btn-success">Edit</a>
+                                    </div>
+
+                                    <br>
+                                </th:block>
+                            <form class="form w-15 mx-auto text-center" th:action="@{/saved/save/{id}(id=${postID})}"
+                                  method="post">
+                                <div>
+                                        <button class="btn btn-info" th:text="Save"></button>
+                                </div>
+                            </form>
+                            <br>
+                            <form class="form w-15 mx-auto text-center" th:action="@{/rates/vote/{id}(id=${postID})}"
+                                  method="post">
+                                <div class="rate-recipe d-flex">
+                                    <th:block th:if="${isVoted}">
+                                        <button disabled class="text-dark">
+                                            <i class="far fa-thumbs-up"> Like</i>
+                                            <h5 class="text-black-50 text-dark" th:utext="${post.rate.count}"></h5>
+                                        </button>
+                                    </th:block>
+                                    <th:block th:unless="${isVoted}">
+                                        <button>
+                                            <i class="far fa-thumbs-up"> Like</i>
+                                            <h5 class="text-black-50 text-info" th:utext="${post.rate.count}"></h5>
+                                        </button>
+                                    </th:block>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="btn-register">
+                        <br>
+
+                        <button class="btn btn-outline-success my-2 my-sm-0 text-center justify-content-center"
+                                onclick="window.history.back()" type="submit">Back
+                        </button>
+                    </div>
+
+                    <hr>
+                    <th:block th:each="comment, iter : ${postComment}">
+                        <ul class="comment-form">
+                            <li>
+                                <h6 th:utext="${#dates.format(comment.postComment.get(0).postTime, 'dd-MM-yyyy')}"></h6>
+                                <a class="post-username"
+                                   th:href="@{/users/details/{id}(id=${comment.userComment.get(0).Id})}"
+                                   th:text="${comment.userComment.get(0).username}"></a>
+                                <h5 th:text="${comment.description}"></h5>
+                            </li>
+                        </ul>
+                    </th:block>
+                    <form id="add-comment" th:action="@{/comments/comment-post/{id}(id=${postID})}" method="post">
+                        <div class="comment-form">
+                            <label class="text-center" for="input-comment">Add Comment</label>
+                            <textarea class="form-control" id="input-comment" name="description" row="2"></textarea>
+                            <button class="add-comment-recipe btn-info" id="send-comment"> add Comment</button>
+                        </div>
+                        <hr class="my-3">
+                    </form>
+
+                </div>
+                <hr class="my-3"/>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

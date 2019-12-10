@@ -1,0 +1,98 @@
+/* Register Form */
+
+.register-form  {
+    /* width: 30%; */
+    /* margin-left: auto; */
+    padding: 1rem 5rem;
+    background: rgba(153, 241, 146, 0.5);
+    box-shadow: 0px 0px 38px -4px rgba(105,255,123,1);
+    border-radius: 15px;
+}
+
+.register-form h1 {
+    text-align: center;
+    padding: 0 0 2rem 0;
+    font-size: xx-large
+}
+
+.register-form-input {
+    text-align: center;
+}
+
+.btn-register {
+    text-align: center;
+    padding: 2rem;
+}
+
+.welcome {
+    text-align: center;
+    font-family: initial;
+    padding-bottom: 2rem;
+    color: #28A745
+}
+
+.page-info {
+    padding: 4rem 0;
+}
+
+/* Comments Recipe Form */
+.comment-form{
+    padding: 0.5rem;
+    background: rgba(209, 245, 206, 0.5);
+    box-shadow: 0px 0px 38px -4px rgba(105,255,123,1);
+    border-radius: 15px;
+}
+
+/* Login */
+.login-form {
+    /* width: 60%;
+    margin: 0 auto; */
+    padding: 1rem;
+    background: rgba(153, 241, 146, 0.5);
+    box-shadow: 0px 0px 38px -4px rgba(105,255,123,1);
+    border-radius: 15px;
+}
+
+.btn-login {
+    text-align: center;
+}
+
+/* Home page posts */
+
+.home-page-posts {
+    display: flex;
+    margin: 0 auto;
+    padding: 2rem;
+    background: rgba(153, 241, 146, 0.5);
+    box-shadow: 0px 0px 38px -4px rgba(105,255,123,1);
+    border-radius: 15px;
+    text-align: center;
+}
+
+/* Comment form */
+
+.home-page-posts h5,.home-page-posts li {
+    padding: 1rem 0;
+}
+
+.home-page-posts ul {
+    display: flex;
+}
+
+.home-page-posts li {
+    margin: 0 auto;
+}
+/* ADMIN navbar */
+
+.admin-link {
+    color: beige;
+}
+
+/* DELETE FORM */
+
+.delete-form input,.delete-form textarea {
+    margin: 0 auto;
+}
+
+/* Notes */
+

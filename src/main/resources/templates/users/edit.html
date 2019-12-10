@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="fragments/head"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:include="fragments/navbar"></th:block>
+</header>
+<main>
+    <div class="home-page">
+        <form id="add-recipe-form" class="form w-15 mx-auto text-center" th:action="@{/users/edit}" method="post"
+              enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label for="add-recipe-image" class="font-weight-bold">Profile Image</label>
+                <input type="file" class="form-control-file" id="add-recipe-image" name="image">
+            </div>
+
+            <div class="form-group">
+                <label for="add-firstName" class="font-weight-bold">First Name</label>
+                <input type="text" class="form-control" id="add-firstName" name="firstName" th:value="${model.firstName}">
+            </div>
+
+            <div class="form-group">
+                <label for="add-lastName" class="font-weight-bold">Last Name</label>
+                <input type="text" class="form-control" id="add-lastName" name="lastName" th:value="${model.lastName}">
+            </div>
+
+
+            <div class="form-group">
+                <label for="changePassword" class="font-weight-bold">Change Password</label>
+                <input type="password" class="form-control" id="changePassword" name="password">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword" class="font-weight-bold">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+            </div>
+
+            <div class="btn-edit">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit</button>
+            </div>
+        </form>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>
