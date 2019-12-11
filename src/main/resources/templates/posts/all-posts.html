@@ -20,7 +20,7 @@
                 <th class="col-md-2 text-center">Recipe Name</th>
                 <th class="col-md-2 text-center">Description</th>
                 <th class="col-md-2 text-center">View</th>
-                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                <th:block sec:authorize="hasRole('ROLE_MODERATOR')">
                 <th class="col-md-2 text-center">Edit</th>
                 <th class="col-md-2 text-center">Delete</th>
                 </th:block>
@@ -39,7 +39,7 @@
                     <td class="col-md-2 text-center">
                         <a th:href="@{/posts/details/{id}(id=${post.id})}" class="btn btn-info">View Recipe</a>
                     </td>
-                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                    <th:block sec:authorize="hasRole('ROLE_MODERATOR')">
                         <td class="col-md-2 text-center">
                             <a th:href="@{/posts/edit/{id}(id=${post.id})}" class="btn btn-success">Edit Recipe</a>
                         </td>
