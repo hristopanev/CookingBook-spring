@@ -11,7 +11,7 @@
     <groupId>net.cookingbook</groupId>
     <artifactId>cookingbook</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>cookingbook</name>
     <description>You can share your love of cooking and connect with other like minded individuals who are on the
         constant lookout for the next great recipe
