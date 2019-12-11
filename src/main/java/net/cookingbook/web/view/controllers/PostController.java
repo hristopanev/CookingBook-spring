@@ -46,11 +46,6 @@ public class PostController extends BaseController {
         this.modelMapper = modelMapper;
     }
 
-//    @ModelAttribute()
-//    public PostCreateBindingModel model() {
-//        return new PostCreateBindingModel();
-//    }
-
     @GetMapping("/add")
     public ModelAndView addPost(Principal principal, ModelAndView modelAndView) {
         modelAndView.addObject("username", principal.getName());

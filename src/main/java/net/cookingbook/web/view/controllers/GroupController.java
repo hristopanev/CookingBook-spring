@@ -173,6 +173,7 @@ public class GroupController extends BaseController {
     }
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView deleteGroup(@PathVariable String id) {
         this.groupService.deleteGroup(id);
 
@@ -180,6 +181,7 @@ public class GroupController extends BaseController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView allGroup(Principal principal, ModelAndView modelAndView) {
         List<GroupServiceModel> groups = this.groupService.findAllGroups();
         var user = this.userService.findUserByUserName(principal.getName());
