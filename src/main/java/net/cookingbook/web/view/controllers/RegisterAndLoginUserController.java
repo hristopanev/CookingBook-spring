@@ -41,7 +41,7 @@ public class RegisterAndLoginUserController extends BaseController {
         this.userService.registerUser(userServiceModel);
 
 
-        return super.redirect("/login");
+        return super.redirect("/");
     }
 
 
