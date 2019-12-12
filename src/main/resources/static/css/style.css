@@ -134,4 +134,8 @@ footer {
     .table-form {
         display: none;
     }
+
+    .comment-form {
+        width: 100%;
+    }
 }

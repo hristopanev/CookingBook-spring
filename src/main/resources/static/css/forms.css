@@ -36,7 +36,7 @@
 }
 
 /* Comments Recipe Form */
-.comment-form{
+.comment-form {
     padding: 0.5rem;
     background: rgba(209, 245, 206, 0.5);
     box-shadow: 0px 0px 38px -4px rgba(105,255,123,1);
@@ -84,14 +84,8 @@
 .home-page-posts li {
     margin: 0 auto;
 }
-/* ADMIN navbar */
-
-.admin-link {
-    color: beige;
-}
 
 /* DELETE FORM */
-
 .delete-form input,.delete-form textarea {
     margin: 0 auto;
 }
