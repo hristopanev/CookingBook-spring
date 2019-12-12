@@ -184,7 +184,7 @@ public class GroupController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView allGroup(Principal principal, ModelAndView modelAndView) {
         List<GroupServiceModel> groups = this.groupService.findAllGroups();
-        var user = this.userService.findUserByUserName(principal.getName());
+        UserServiceModel user = getUsername(principal);
 
         modelAndView.addObject("username", user.getUsername());
         modelAndView.addObject("groups", groups);

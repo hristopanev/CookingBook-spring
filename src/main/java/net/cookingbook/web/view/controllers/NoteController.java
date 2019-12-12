@@ -108,7 +108,7 @@ public class NoteController extends BaseController {
     }
 
     @GetMapping("/edit/{id}")
-    @PreAuthorize(("isAuthenticated()"))
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ModelAndView editNote(Principal principal, @PathVariable String id, ModelAndView modelAndView) {
         var note = this.noteService.findById(id);
 
@@ -120,7 +120,7 @@ public class NoteController extends BaseController {
     }
 
     @PostMapping("/edit/{id}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ModelAndView editGroupConfig(@PathVariable String id, @ModelAttribute NoteCreateBindingModel model) {
         NoteServiceModel noteServiceModel = this.modelMapper.map(model, NoteServiceModel.class);
 

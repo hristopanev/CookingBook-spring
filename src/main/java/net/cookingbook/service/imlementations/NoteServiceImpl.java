@@ -69,8 +69,6 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public List<NoteServiceModel> getAllUserNotes(String id) {
-
-        //TODO IT's WORK?
         return this.noteRepository.findAllByUser_IdContains(id)
                 .stream()
                 .map(n -> this.modelMapper.map(n, NoteServiceModel.class))

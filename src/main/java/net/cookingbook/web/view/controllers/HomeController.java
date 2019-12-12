@@ -44,7 +44,7 @@ public class HomeController extends BaseController {
     @GetMapping("/home")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView home(Principal principal, ModelAndView modelAndView) {
-        var user = getUsername(principal);
+        UserServiceModel user = getUsername(principal);
 
         List<UserServiceModel> friends = this.userService.findById(user.getId())
                 .getFriends()
