@@ -1,6 +1,7 @@
 .home {
     padding: 1rem 1rem;
 }
+
 .row {
     margin-right: 0;
     margin-left: 0;
@@ -26,7 +27,7 @@ body, html {
 }
 
 .home-page {
-    box-shadow: 0px 0px 38px -4px rgba(105,255,123,1);
+    box-shadow: 0px 0px 38px -4px rgba(105, 255, 123, 1);
     padding: 3rem;
 }
 
@@ -53,7 +54,7 @@ body, html {
     width: 100%;
 }
 
-.name-group-cell>a {
+.name-group-cell > a {
     color: darkcyan;
 }
 
@@ -72,6 +73,7 @@ body, html {
 #navbarResponsive > ul > li > a {
     color: #0d9640;
 }
+
 .search {
     margin: 0 auto;;
 }
@@ -97,7 +99,7 @@ footer {
 
 .notes-form {
     background-color: #F8E877;
-    box-shadow:  10px 10px 69px 3px rgba(248,232,119,1);
+    box-shadow: 10px 10px 69px 3px rgba(248, 232, 119, 1);
 
 }
 
@@ -124,9 +126,14 @@ footer {
 
 @media (max-width: 760px) {
 
+    .register-form  {
+        padding: 1rem 1rem;
+    }
+
     .home-page, .home-page-notes {
         padding: 0;
     }
+
     #group-form {
         display: none;
     }
@@ -138,4 +145,6 @@ footer {
     .comment-form {
         width: 100%;
     }
+
+
 }
