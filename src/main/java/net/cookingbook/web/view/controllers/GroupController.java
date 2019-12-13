@@ -145,10 +145,13 @@ public class GroupController extends BaseController {
     @PostMapping("/edit/{id}")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView editGroupConfig(@PathVariable String id, @ModelAttribute GroupCreateBindingModel model) {
+
+        if (model.getName().isEmpty()) {
+            return super.redirect("/groups/group/" + id);
+        }
+
         GroupServiceModel groupServiceModel = this.modelMapper.map(model, GroupServiceModel.class);
-
         this.groupService.editGroup(id, groupServiceModel);
-
         return super.redirect("/groups/group/" + id);
     }
 
