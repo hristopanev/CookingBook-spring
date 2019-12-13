@@ -34,14 +34,47 @@ public class RegisterAndLoginUserController extends BaseController {
     @PostMapping("/register")
     @PreAuthorize("isAnonymous()")
     public ModelAndView registerConfirm(ModelAndView modelAndView, @ModelAttribute(name = "model") UserRegisterBindingModel model, BindingResult bindingResult) {
+
+        boolean userIsValid = this.userService.isPresent(this.modelMapper.map(model, UserServiceModel.class));
+
+        if (!userIsValid) {
+            return super.view("/users/user-register");
+        }
+
         if (!model.getPassword().equals(model.getConfirmPassword())) {
-            return super.view("register");
+            return super.view("user-register");
         }
         UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
         this.userService.registerUser(userServiceModel);
 
 
-        return super.redirect("/");
+        return super.redirect("/login");
+    }
+
+    @GetMapping("/user-register")
+    @PreAuthorize("isAnonymous()")
+    public ModelAndView userRegister(ModelAndView modelAndView, @ModelAttribute(name = "model") UserRegisterBindingModel model) {
+        modelAndView.addObject("model", model);
+        return super.view("users/user-register");
+    }
+
+    @PostMapping("/user-register")
+    @PreAuthorize("isAnonymous()")
+    public ModelAndView registerIncorrect(ModelAndView modelAndView, @ModelAttribute(name = "model") UserRegisterBindingModel model, BindingResult bindingResult) {
+
+        this.userRegisterValidator.validate(model, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.setPassword(null);
+            model.setConfirmPassword(null);
+            modelAndView.addObject("model", model);
+
+            return super.view("/users/user-register", modelAndView);
+        }
+        UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
+        this.userService.registerUser(userServiceModel);
+
+
+        return super.redirect("/login");
     }
 
 

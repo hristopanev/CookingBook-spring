@@ -3,8 +3,6 @@ package net.cookingbook.service.models.services;
 import java.util.List;
 import java.util.Set;
 
-//TODO MUST CHANGE LISTS AND IMPLEMENT SERVICE MODELS
-
 public class UserServiceModel extends BaseServiceModel {
 
     private String username;

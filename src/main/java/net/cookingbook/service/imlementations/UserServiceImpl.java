@@ -138,6 +138,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isPresent(UserServiceModel userServiceModel) {
+
+        if (this.userRepository.findByUsername(userServiceModel.getUsername()).isPresent()
+                || this.userRepository.findByUsername(userServiceModel.getEmail()).isPresent()) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public void setUserRole(String id, String role) {
         User user = this.userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Incorrect id!"));

@@ -34,5 +34,30 @@ public class PostCreateValidator implements org.springframework.validation.Valid
             );
         }
 
+        if (postCreateBindingModel.getImage().isEmpty()) {
+            errors.rejectValue(
+                    "image",
+                    ValidationConstants.POST_IMAGE,
+                    ValidationConstants.POST_IMAGE
+            );
+        }
+
+        if (postCreateBindingModel.getProducts().length() < 5) {
+            errors.rejectValue(
+                    "products",
+                    ValidationConstants.POST_PRODUCTS_LENGTH,
+                    ValidationConstants.POST_PRODUCTS_LENGTH
+            );
+        }
+
+        if (postCreateBindingModel.getDescription().length() < 15) {
+            errors.rejectValue(
+                    "description",
+                    ValidationConstants.POST_DESCRIPTION_LENGTH,
+                    ValidationConstants.POST_DESCRIPTION_LENGTH
+            );
+        }
     }
+
+
 }

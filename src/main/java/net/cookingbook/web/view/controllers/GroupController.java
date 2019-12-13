@@ -5,13 +5,16 @@ import net.cookingbook.service.models.services.GroupServiceModel;
 import net.cookingbook.service.models.services.PostServiceModel;
 import net.cookingbook.service.models.services.RateServiceModel;
 import net.cookingbook.service.models.services.UserServiceModel;
+import net.cookingbook.validation.group.GroupCreateValidator;
 import net.cookingbook.web.base.BaseController;
 import net.cookingbook.web.view.models.binding.GroupCreateBindingModel;
 import net.cookingbook.web.view.models.binding.PostCreateBindingModel;
+import net.cookingbook.web.view.models.binding.UserRegisterBindingModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,23 +33,25 @@ public class GroupController extends BaseController {
     private final PostService postService;
     private final RateService rateService;
     private final ModelMapper modelMapper;
+    private final GroupCreateValidator groupCreateValidator;
     private CloudinaryService cloudinaryService;
 
 
     @Autowired
-    public GroupController(GroupService groupService, UserService userService, PostService postService, RateService rateService, ModelMapper modelMapper, CloudinaryService cloudinaryService) {
+    public GroupController(GroupService groupService, UserService userService, PostService postService, RateService rateService, ModelMapper modelMapper, GroupCreateValidator groupCreateValidator, CloudinaryService cloudinaryService) {
         super(userService);
         this.groupService = groupService;
         this.userService = userService;
         this.postService = postService;
         this.rateService = rateService;
         this.modelMapper = modelMapper;
+        this.groupCreateValidator = groupCreateValidator;
         this.cloudinaryService = cloudinaryService;
     }
 
     @GetMapping("/create")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView createGroup(Principal principal, ModelAndView modelAndView) {
+    public ModelAndView createGroup(Principal principal, ModelAndView modelAndView,@ModelAttribute(name = "model") GroupCreateBindingModel model) {
         var user = getUsername(principal);
         modelAndView.addObject("username", user.getUsername());
 
@@ -55,16 +60,23 @@ public class GroupController extends BaseController {
 
     @PostMapping("/create")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView createGroup(@ModelAttribute GroupCreateBindingModel createBindingModel, Principal principal) {
+    public ModelAndView createGroup(Principal principal, ModelAndView modelAndView, @ModelAttribute(name = "model") GroupCreateBindingModel model, BindingResult bindingResult) {
+
+        this.groupCreateValidator.validate(model, bindingResult);
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("model", model);
+
+            return super.view("groups/create", modelAndView);
+        }
 
         var user = getUsername(principal);
-        createBindingModel.setUsers(user);
-        GroupServiceModel groupServiceModel = this.modelMapper.map(createBindingModel, GroupServiceModel.class);
+        model.setUsers(user);
+        GroupServiceModel groupServiceModel = this.modelMapper.map(model, GroupServiceModel.class);
 
         groupServiceModel.setUsers(
                 this.userService.findAllUsers()
                         .stream()
-                        .filter(u -> createBindingModel.getUsers().getId().contains(u.getId()))
+                        .filter(u -> model.getUsers().getId().contains(u.getId()))
                         .collect(Collectors.toList())
         );
         this.groupService.createGroup(groupServiceModel);

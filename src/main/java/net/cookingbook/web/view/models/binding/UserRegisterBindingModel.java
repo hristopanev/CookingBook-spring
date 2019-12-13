@@ -1,5 +1,8 @@
 package net.cookingbook.web.view.models.binding;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class UserRegisterBindingModel {
 
     private String firstName;
@@ -28,6 +31,8 @@ public class UserRegisterBindingModel {
         this.lastName = lastName;
     }
 
+    @NotEmpty
+    @NotNull
     public String getUsername() {
         return this.username;
     }

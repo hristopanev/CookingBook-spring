@@ -5,18 +5,19 @@ import net.cookingbook.service.RateService;
 import net.cookingbook.service.models.services.CommentServiceModel;
 import net.cookingbook.service.models.services.RateServiceModel;
 import net.cookingbook.service.models.services.UserServiceModel;
+import net.cookingbook.validation.post.PostCreateValidator;
 import net.cookingbook.web.base.BaseController;
 import net.cookingbook.web.view.models.binding.PostCreateBindingModel;
 import net.cookingbook.service.models.services.PostServiceModel;
 import net.cookingbook.service.CloudinaryService;
 import net.cookingbook.service.PostService;
 import net.cookingbook.service.UserService;
-import net.cookingbook.web.view.models.binding.RateCreateBindingModel;
 import net.cookingbook.web.view.models.views.PostDetailsViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,19 +36,21 @@ public class PostController extends BaseController {
     private final UserService userService;
     private final RateService rateService;
     private final ModelMapper modelMapper;
+    private final PostCreateValidator postCreateValidator;
 
     @Autowired
-    public PostController(PostService postService, CloudinaryService cloudinaryService, UserService userService, RateService rateService, ModelMapper modelMapper) {
+    public PostController(PostService postService, CloudinaryService cloudinaryService, UserService userService, RateService rateService, ModelMapper modelMapper, PostCreateValidator postCreateValidator) {
         super(userService);
         this.postService = postService;
         this.cloudinaryService = cloudinaryService;
         this.userService = userService;
         this.rateService = rateService;
         this.modelMapper = modelMapper;
+        this.postCreateValidator = postCreateValidator;
     }
 
     @GetMapping("/add")
-    public ModelAndView addPost(Principal principal, ModelAndView modelAndView) {
+    public ModelAndView addPost(ModelAndView modelAndView, @ModelAttribute(name = "model") PostCreateBindingModel model, Principal principal) {
         modelAndView.addObject("username", principal.getName());
 
         return super.view("posts/add-post", modelAndView);
@@ -55,7 +58,16 @@ public class PostController extends BaseController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ModelAndView addProductConfirm(@ModelAttribute PostCreateBindingModel model, Principal principal) throws IOException {
+    public ModelAndView addProductConfirm(ModelAndView modelAndView, @ModelAttribute(name = "model") PostCreateBindingModel model, Principal principal, BindingResult bindingResult) throws IOException {
+
+        this.postCreateValidator.validate(model, bindingResult);
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("model", model);
+
+            return super.view("posts/add-post", modelAndView);
+        }
+
+
         PostServiceModel postServiceModel = this.modelMapper.map(model, PostServiceModel.class);
         UserServiceModel user = this.userService.findUserByUserName(principal.getName());
         RateServiceModel rateServiceModel = new RateServiceModel();
@@ -71,7 +83,8 @@ public class PostController extends BaseController {
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ModelAndView editPost(Principal principal, @PathVariable String id, ModelAndView modelAndView) {
+    public ModelAndView editPost(@PathVariable String id, ModelAndView modelAndView, @ModelAttribute(name = "model") PostCreateBindingModel model, Principal principal) {
+
         PostServiceModel postServiceModel = this.postService.findById(id);
 
         modelAndView.addObject("post", postServiceModel);
@@ -83,7 +96,15 @@ public class PostController extends BaseController {
 
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public  ModelAndView editPostConfirm(@PathVariable String id, @ModelAttribute PostCreateBindingModel model) throws IOException {
+    public  ModelAndView editPostConfirm(@PathVariable String id, ModelAndView modelAndView, @ModelAttribute(name = "model") PostCreateBindingModel model, BindingResult bindingResult) throws IOException {
+
+
+        this.postCreateValidator.validate(model, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return super.redirect("/posts/edit/" + id);
+
+        }
+
         PostServiceModel postServiceModel = this.modelMapper.map(model, PostServiceModel.class);
 
         if (model.getImage().getBytes().length != 0) {

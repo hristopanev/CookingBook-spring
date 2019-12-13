@@ -13,24 +13,36 @@
         <hr class="hr-2 bg-dark w-25">
         <div class="recept-form container">
             <form id="add-recipe-form" class="form w-15 mx-auto" th:action="@{/posts/add}" method="post"
-                  enctype="multipart/form-data">
+                  enctype="multipart/form-data" th:object="${model}">
                 <div class="form-group">
                     <label for="add-recipe-name" class="font-weight-bold">Name</label>
-                    <input type="text" class="form-control" id="add-recipe-name" name="name">
+                    <input type="text" class="form-control" id="add-recipe-name" name="name" th:value="*{name}">
+                    <th:block th:if="${#fields.hasErrors('name')}">
+                        <small class="error" th:errors="*{name}"></small>
+                    </th:block>
                 </div>
                 <div class="form-group">
                     <div class="form-group">
                         <label for="add-recipe-image" class="font-weight-bold">Image</label>
-                        <input type="file" class="form-control-file" id="add-recipe-image" name="image">
+                        <input type="file" class="form-control-file" id="add-recipe-image" name="image" th:value="*{image}">
+                        <th:block th:if="${#fields.hasErrors('image')}">
+                            <small class="error" th:errors="*{image}"></small>
+                        </th:block>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="add-recipe-product" class="font-weight-bold">Write recipe products</label>
-                    <textarea class="form-control" id="add-recipe-product" aria-label="With textarea" name="products"></textarea>
+                    <textarea class="form-control" id="add-recipe-product" aria-label="With textarea" name="products" th:value="*{products}"></textarea>
+                    <th:block th:if="${#fields.hasErrors('products')}">
+                        <small class="error" th:errors="*{products}"></small>
+                    </th:block>
                 </div>
                 <div class="form-group">
                     <label for="add-recipe-description" class="font-weight-bold">Write recipe description</label>
-                    <textarea class="form-control" id="add-recipe-description" aria-label="With textarea" name="description"></textarea>
+                    <textarea class="form-control" id="add-recipe-description" aria-label="With textarea" name="description" th:value="*{description}"></textarea>
+                    <th:block th:if="${#fields.hasErrors('description')}">
+                        <small class="error" th:errors="*{description}"></small>
+                    </th:block>
                 </div>
                 <hr class="hr-2 bg-dark w-25">
                 <div class="button-holder d-flex justify-content-center">

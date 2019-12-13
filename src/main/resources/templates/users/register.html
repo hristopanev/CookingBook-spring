@@ -1,9 +1,13 @@
 <th:block th:fragment xmlns:th="http://www.thymeleaf.org">
-    <form th:action="@{/register}" th:method="post">
+    <form th:action="@{/register}" th:method="post" th:object="${model}">
         <div class="register-form-input">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Username" name="username" required>
+                <input type="text" class="form-control" id="username" placeholder="Username..." name="username" >
+<!--                th:value="*{username}"-->
+<!--                <th:block th:if="${#fields.hasErrors('username')}">-->
+<!--                    <small class="error" th:errors="*{username}"></small>-->
+<!--                </th:block>-->
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
@@ -15,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
+                <input type="email" class="form-control" id="email" placeholder="Email" name="email">
             </div>
         </div>
         <div class="btn-register">

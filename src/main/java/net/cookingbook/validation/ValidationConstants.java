@@ -25,4 +25,15 @@ public class ValidationConstants {
 
     public final static String POST_NAME_LENGTH = "Recipe name must be between 2 and 30 characters long!";
 
+    public final static String POST_IMAGE = "Recipe image can not be empty!";
+
+    public final static String POST_PRODUCTS_LENGTH = "Recipe product must min 5 characters long!";
+
+    public final static String POST_DESCRIPTION_LENGTH = "Recipe description must min 15 characters long!";
+
+    /* NOTE */
+
+
+    public final static String NOTE_TITLE_LENGTH = "Note title must contain at least 3 characters!";
+
 }

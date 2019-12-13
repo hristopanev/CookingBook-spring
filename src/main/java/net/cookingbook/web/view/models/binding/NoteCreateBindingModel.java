@@ -1,5 +1,9 @@
 package net.cookingbook.web.view.models.binding;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class NoteCreateBindingModel {
@@ -11,7 +15,6 @@ public class NoteCreateBindingModel {
 
     public NoteCreateBindingModel() {
     }
-
     public String getTitle() {
         return this.title;
     }
