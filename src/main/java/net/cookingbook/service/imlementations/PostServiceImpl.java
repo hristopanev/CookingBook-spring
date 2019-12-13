@@ -78,8 +78,12 @@ public class PostServiceImpl implements PostService {
         Rate rate = this.rateRepository.findByPost_idContains(id);
         Comment comment = this.commentRepository.findByPostComment_idContains(post.getId());
 
-        this.commentRepository.delete(comment);
-        this.rateRepository.delete(rate);
+        if (comment != null) {
+            this.commentRepository.delete(comment);
+        }
+        if (rate != null) {
+            this.rateRepository.delete(rate);
+        }
         this.postRepository.delete(post);
     }
 

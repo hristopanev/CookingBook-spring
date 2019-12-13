@@ -85,7 +85,8 @@ public class GroupController extends BaseController {
 
     @GetMapping("/group/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView group(Principal principal, @PathVariable String id, ModelAndView modelAndView) {
+    public ModelAndView group(@PathVariable String id, Principal principal, ModelAndView modelAndView) {
+
         var user = userService.findUserByUserName(principal.getName());
         var description = this.groupService.findById(id).getDescription();
         var isJoined = this.groupService.isJoined(id, user);
