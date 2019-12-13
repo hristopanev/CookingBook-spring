@@ -119,10 +119,10 @@ public class UserServiceImpl implements UserService {
         }
 
         UserProfile userProfile = this.userProfileRepository.findByUserId(user.getId());
-        if (!userServiceModel.getFirstName().isEmpty()) {
+        if (userServiceModel.getFirstName() != null) {
             userProfile.setFirstName(userServiceModel.getFirstName());
         }
-        if (!userServiceModel.getLastName().isEmpty()) {
+        if (userServiceModel.getLastName() != null) {
             userProfile.setLastName(userServiceModel.getLastName());
         }
         if (userServiceModel.getImageUrl() != null) {
