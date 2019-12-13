@@ -96,13 +96,11 @@ public class PostController extends BaseController {
 
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public  ModelAndView editPostConfirm(@PathVariable String id, ModelAndView modelAndView, @ModelAttribute(name = "model") PostCreateBindingModel model, BindingResult bindingResult) throws IOException {
+    public  ModelAndView editPostConfirm(@PathVariable String id, @ModelAttribute(name = "model") PostCreateBindingModel model) throws IOException {
 
 
-        this.postCreateValidator.validate(model, bindingResult);
-        if (bindingResult.hasErrors()) {
+        if (model.getDescription().length() < 10 || model.getProducts().length() < 5 || model.getName().length() < 2) {
             return super.redirect("/posts/edit/" + id);
-
         }
 
         PostServiceModel postServiceModel = this.modelMapper.map(model, PostServiceModel.class);
