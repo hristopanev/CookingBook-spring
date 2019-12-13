@@ -37,11 +37,9 @@ public class MessageController extends BaseController {
 
     @GetMapping("/send/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView sendMessage(@PathVariable String id, ModelAndView modelAndView, Principal principal, @ModelAttribute(name = "model") MessageSendBindingModel model) {
+    public ModelAndView sendMessage(@PathVariable String id, ModelAndView modelAndView, Principal principal, @ModelAttribute(name = "model") MessageServiceModel model) {
 
         var user = getUsername(principal);
-
-        modelAndView.addObject("model", model);
         modelAndView.addObject("userID", id);
         modelAndView.addObject("username", user.getUsername());
 
@@ -50,14 +48,7 @@ public class MessageController extends BaseController {
 
     @PostMapping("/send/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView sendMessageConfirm(@PathVariable String id, Principal principal, ModelAndView modelAndView, @ModelAttribute(name = "model") MessageServiceModel model, BindingResult bindingResult) {
-
-        this.messageSendValidator.validate(model, bindingResult);
-        if (bindingResult.hasErrors()) {
-            modelAndView.addObject("model", model);
-
-            return super.view("/message/send", modelAndView);
-        }
+    public ModelAndView sendMessageConfirm(@PathVariable String id, Principal principal, @ModelAttribute(name = "model") MessageServiceModel model) {
 
         UserServiceModel loggedUser = getUsername(principal);
         UserServiceModel user = this.userService.findById(id);

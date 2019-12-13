@@ -26,7 +26,7 @@ public class MessageSendValidator implements org.springframework.validation.Vali
     public void validate(Object o, Errors errors) {
         MessageServiceModel messageServiceModel = (MessageServiceModel) o;
 
-        if (messageServiceModel.getDescription().length() < 1) {
+        if (messageServiceModel.getDescription().length() < 2) {
             errors.rejectValue(
                     "description",
                     ValidationConstants.MESSAGE_LENGTH,
