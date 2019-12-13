@@ -213,6 +213,15 @@ public class UserController extends BaseController {
         return super.view("users/my-posts", modelAndView);
     }
 
+    @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ModelAndView deleteMessage(@PathVariable String id) {
+        this.userService.deleteUser(id);
+
+        return super.redirect("/users/all-users");
+    }
+
+
     @InitBinder
     private void initBinder(WebDataBinder webDataBinder) {
         webDataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));

@@ -58,6 +58,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUser(String id) {
+        var user = this.userRepository.findUserById(id);
+        var userProfile = this.userProfileRepository.findByUserId(id);
+
+        user.getAuthorities().remove(user);
+        this.userProfileRepository.delete(userProfile);
+        this.userRepository.delete(user);
+    }
+
+    @Override
     public UserServiceModel findById(String id) {
         return this.userRepository.findById(id)
                 .map(u -> this.modelMapper.map(u, UserServiceModel.class))

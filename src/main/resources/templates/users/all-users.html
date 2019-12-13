@@ -52,13 +52,15 @@
                                     <form th:action="@{/users/set-user/{id}(id=${user.id})}" method="post">
                                         <button class="btn btn-success btn-width">USER</button>
                                     </form>
-                              </form>
                                 </th:block>
                             </div>
 
                         <td class="col-md-2 text-center">
-                            <form>
-                                <button class="btn btn-danger">Delete</button>
+                            <form id="add-product-form" class="form w-15 mx-auto"
+                                  th:action="@{/users/delete/{id}(id=${user.id})}" method="post">
+                                <div class="button-holder d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-danger">Delete User</button>
+                                </div>
                             </form>
                         </td>
                     </th:block>

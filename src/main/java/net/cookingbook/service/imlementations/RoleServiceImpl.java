@@ -32,19 +32,6 @@ public class RoleServiceImpl implements RoleService {
         }
     }
 
-//    @Override
-//    public void assignUserRoles(UserServiceModel userServiceModel, long numberOfUsers) {
-//        if (numberOfUsers == 0) {
-//            userServiceModel
-//                    .setAuthorities(this.roleRepository
-//                            .findAll()
-//                            .stream()
-//                            .map(r -> this.modelMapper.map(r, RoleServiceModel.class))
-//                            .collect(Collectors.toSet()));
-//        }
-//    }
-
-
     @Override
     public Set<RoleServiceModel> findAllRoles() {
         return this.roleRepository.findAll()

@@ -26,4 +26,6 @@ public interface UserService extends UserDetailsService {
     boolean deleteFollow(String friend_id, UserServiceModel userServiceModel);
 
     boolean isPresent(UserServiceModel userServiceModel);
+
+    void deleteUser(String id);
 }
