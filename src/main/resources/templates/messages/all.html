@@ -40,9 +40,14 @@
                     <td class="col-md-2 text-center">
                         <a th:href="@{/messages/message/{id}(id=${message.id})}" class="btn btn-info">View Message</a>
                     </td>
-                    <td class="col-md-2 text-center">
-                        <a th:href="@{/messages/delete/{id}(id=${message.id})}" class="btn btn-danger">Delete Message</a>
-                    </td>
+                    <form id="add-product-form" class="form w-15 mx-auto" th:action="@{/messages/delete/{id}(id=${message.id})}" method="post">
+                        <td class="col-md-2 text-center">
+                            <div class="button-holder d-flex justify-content-center">
+                                <button type="submit" class="btn btn-danger">Delete Note</button>
+                            </div>
+                        </td>
+                    </form>
+
                 </tr>
             </th:block>
             </tbody>

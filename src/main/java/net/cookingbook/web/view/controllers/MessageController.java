@@ -93,4 +93,12 @@ public class MessageController extends BaseController {
 
         return super.view("messages/message" , modelAndView);
     }
+
+    @PostMapping("/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ModelAndView deleteMessage(@PathVariable String id) {
+        this.messageService.deleteMessage(id);
+
+        return super.redirect("/messages/all");
+    }
 }
