@@ -21,4 +21,6 @@ public interface PostRepository extends JpaRepository<Post, String > {
     Post findByImageUrl(String imageUrl);
 
     Post findPostById(String id);
+
+    List<Post> findAllByGroups_IdContainsOrderByPostTimeDesc(String id);
 }

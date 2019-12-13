@@ -31,4 +31,5 @@ public interface GroupService {
     boolean cretePost(GroupServiceModel groupServiceModel, PostServiceModel postServiceModel);
 
     boolean isExist(String id);
+
 }

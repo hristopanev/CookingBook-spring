@@ -85,18 +85,12 @@ public class GroupController extends BaseController {
 
     @GetMapping("/group/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView group(@PathVariable String id, Principal principal, ModelAndView modelAndView) {
-
+    public ModelAndView group(Principal principal, @PathVariable String id, ModelAndView modelAndView) {
         var user = userService.findUserByUserName(principal.getName());
         var description = this.groupService.findById(id).getDescription();
         var isJoined = this.groupService.isJoined(id, user);
-        var group = this.groupService.findById(id);
 
-        var posts = groupService.findById(id).getPosts()
-                .stream()
-                .filter(p -> p.getId().contains(group.getPosts().get(0).getId()))
-                .map(p -> this.modelMapper.map(p, PostServiceModel.class))
-                .collect(Collectors.toList());
+        List<PostServiceModel> posts = this.postService.findAllGroupPosts(id);
 
         modelAndView.addObject("isJoined", isJoined);
         modelAndView.addObject("groupID", id);

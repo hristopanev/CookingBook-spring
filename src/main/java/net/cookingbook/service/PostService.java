@@ -20,4 +20,6 @@ public interface PostService {
     List<PostServiceModel> getAllUserPosts(String id);
 
     boolean isExist(String id);
+
+    List<PostServiceModel> findAllGroupPosts(String id);
 }

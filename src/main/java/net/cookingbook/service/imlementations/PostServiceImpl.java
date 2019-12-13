@@ -1,10 +1,11 @@
 package net.cookingbook.service.imlementations;
 
 import net.cookingbook.data.models.Comment;
+import net.cookingbook.data.models.Group;
 import net.cookingbook.data.models.Post;
 import net.cookingbook.data.models.Rate;
-import net.cookingbook.data.models.User;
 import net.cookingbook.data.repository.CommentRepository;
+import net.cookingbook.data.repository.GroupRepository;
 import net.cookingbook.data.repository.RateRepository;
 import net.cookingbook.errors.PostNotFoundException;
 import net.cookingbook.service.models.services.PostServiceModel;
@@ -22,13 +23,15 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final RateRepository rateRepository;
+    private final GroupRepository groupRepository;
     private final CommentRepository commentRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, RateRepository rateRepository, CommentRepository commentRepository, ModelMapper modelMapper) {
+    public PostServiceImpl(PostRepository postRepository, RateRepository rateRepository, GroupRepository groupRepository, CommentRepository commentRepository, ModelMapper modelMapper) {
         this.postRepository = postRepository;
         this.rateRepository = rateRepository;
+        this.groupRepository = groupRepository;
         this.commentRepository = commentRepository;
         this.modelMapper = modelMapper;
     }
@@ -78,10 +81,16 @@ public class PostServiceImpl implements PostService {
         Rate rate = this.rateRepository.findByPost_idContains(id);
         Comment comment = this.commentRepository.findByPostComment_idContains(post.getId());
 
+        Group group = this.groupRepository.findByPosts_IdContains(id);
+
+        if (group != null) {
+            group.getPosts().remove(post);
+        }
+
         if (comment != null) {
             this.commentRepository.delete(comment);
         }
-        if (rate != null) {
+        if (rate.getCount() > 0) {
             this.rateRepository.delete(rate);
         }
         this.postRepository.delete(post);
@@ -100,5 +109,14 @@ public class PostServiceImpl implements PostService {
         Post post = this.postRepository.findPostById(id);
 
         return post != null;
+    }
+
+    @Override
+    public List<PostServiceModel> findAllGroupPosts(String id) {
+
+        return this.postRepository.findAllByGroups_IdContainsOrderByPostTimeDesc(id)
+                .stream()
+                .map(p -> this.modelMapper.map(p, PostServiceModel.class))
+                .collect(Collectors.toList());
     }
 }

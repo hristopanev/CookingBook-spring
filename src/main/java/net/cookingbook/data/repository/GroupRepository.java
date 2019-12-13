@@ -18,4 +18,6 @@ public interface GroupRepository extends JpaRepository<Group, String > {
     Group findByUsers_IdContains(String id);
 
     List<Group> findAllByUsers_IdContains(String id);
+
+    Group findByPosts_IdContains(String id);
 }
