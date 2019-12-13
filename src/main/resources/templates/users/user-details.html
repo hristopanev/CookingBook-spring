@@ -44,6 +44,13 @@
                         </th:block>
                     </div>
                 </li>
+                <li>
+                    <div class="text-center mt-2">
+                            <form th:action="@{/messages/send/{id}(id=${userID})}" th:method="get">
+                                <button class="btn btn-success" value="Send a Message">Send a Message</button>
+                            </form>
+                    </div>
+                </li>
             </ul>
         </div>
 

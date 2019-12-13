@@ -33,7 +33,9 @@ public class ValidationConstants {
 
     /* NOTE */
 
-
     public final static String NOTE_TITLE_LENGTH = "Note title must contain at least 3 characters!";
+
+    /* MESSAGE */
+    public final static String MESSAGE_LENGTH = "Message must contain at least 3 characters!";
 
 }

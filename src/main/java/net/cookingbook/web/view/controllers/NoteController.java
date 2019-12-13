@@ -45,7 +45,7 @@ public class NoteController extends BaseController {
     @PostMapping("/create")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ModelAndView createNoteConfirm(Principal principal, @ModelAttribute NoteCreateBindingModel model) {
-        var user = this.userService.findUserByUserName(principal.getName());
+        var user = getUsername(principal);
         NoteServiceModel note = this.modelMapper.map(model, NoteServiceModel.class);
 
         note.setUser(user);
@@ -58,12 +58,9 @@ public class NoteController extends BaseController {
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ModelAndView getAllUsersNotes(ModelAndView modelAndView, Principal principal, @ModelAttribute NoteViewModel model) {
-        var user = this.userService.findUserByUserName(principal.getName());
+        var user = getUsername(principal);
 
-        var notes = this.noteService.getAllUserNotes(user.getId())
-                .stream()
-                .map(n -> this.modelMapper.map(n, NoteViewModel.class))
-                .collect(Collectors.toList());
+        var notes = this.noteService.getAllUserNotes(user.getId());
 
         modelAndView.addObject("username", user.getUsername());
         modelAndView.addObject("notes", notes);
@@ -74,7 +71,7 @@ public class NoteController extends BaseController {
     @GetMapping("/details/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ModelAndView getNote(@PathVariable String id, Principal principal, ModelAndView modelAndView) {
-        var user = this.userService.findUserByUserName(principal.getName());
+        var user = getUsername(principal);
 
         var note = this.noteService.findById(id);
 
@@ -88,7 +85,7 @@ public class NoteController extends BaseController {
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ModelAndView deleteNote(@PathVariable String id, Principal principal, ModelAndView modelAndView) {
-        var user = this.userService.findUserByUserName(principal.getName());
+        var user = getUsername(principal);
 
         var note =this.noteService.findById(id);
 
@@ -111,10 +108,11 @@ public class NoteController extends BaseController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ModelAndView editNote(Principal principal, @PathVariable String id, ModelAndView modelAndView) {
         var note = this.noteService.findById(id);
+        var user = getUsername(principal);
 
         modelAndView.addObject("note", note);
         modelAndView.addObject("noteId", id);
-        modelAndView.addObject("username", principal.getName());
+        modelAndView.addObject("username", user.getUsername());
 
         return super.view("/notes/edit-note", modelAndView);
     }

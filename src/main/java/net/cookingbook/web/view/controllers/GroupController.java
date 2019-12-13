@@ -197,7 +197,7 @@ public class GroupController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView allGroup(Principal principal, ModelAndView modelAndView) {
+    public ModelAndView allGroup(Principal principal, ModelAndView modelAndView, @ModelAttribute GroupServiceModel model) {
         List<GroupServiceModel> groups = this.groupService.findAllGroups();
         UserServiceModel user = getUsername(principal);
 
