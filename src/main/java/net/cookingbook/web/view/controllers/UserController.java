@@ -187,7 +187,7 @@ public class UserController extends BaseController {
 
     @GetMapping("/all-users")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView getAllUser(ModelAndView modelAndView) {
+    public ModelAndView getAllUser(ModelAndView modelAndView, Principal principal) {
         List<UserAllViewModel> users = this.userService.findAllUsers()
                 .stream()
                 .map(u -> {
@@ -198,6 +198,7 @@ public class UserController extends BaseController {
                 })
                 .collect(Collectors.toList());
         modelAndView.addObject("users", users);
+        modelAndView.addObject("username", principal.getName());
 
         return super.view("users/all-users", modelAndView);
     }

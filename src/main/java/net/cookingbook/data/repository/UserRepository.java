@@ -4,6 +4,7 @@ import net.cookingbook.data.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,4 +21,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     User findByIdAndFriendsContains(String user_id, User user);
 
     boolean deleteByFriends_IdContains(String friend_id);
+
+    List<User> findAllByFriendsIdContains(String id);
 }

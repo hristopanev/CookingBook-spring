@@ -11,4 +11,6 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, String > {
 
     List<Message> findAllByUser_IdContains(String id);
+
+    List<Message> findAllBySender_IdContains(String id);
 }

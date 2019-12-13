@@ -1,7 +1,9 @@
 package net.cookingbook.service.imlementations;
 
+import net.cookingbook.data.models.Message;
 import net.cookingbook.data.models.User;
 import net.cookingbook.data.models.UserProfile;
+import net.cookingbook.data.repository.MessageRepository;
 import net.cookingbook.data.repository.UserProfileRepository;
 import net.cookingbook.service.models.services.UserServiceModel;
 import net.cookingbook.data.repository.UserRepository;
@@ -23,14 +25,16 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
+    private final MessageRepository messageRepository;
     private final RoleService roleService;
     private final ModelMapper modelMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserProfileRepository userProfileRepository, RoleService roleService, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, UserProfileRepository userProfileRepository, MessageRepository messageRepository, RoleService roleService, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.userProfileRepository = userProfileRepository;
+        this.messageRepository = messageRepository;
         this.roleService = roleService;
         this.modelMapper = modelMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -59,8 +63,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String id) {
-        var user = this.userRepository.findUserById(id);
-        var userProfile = this.userProfileRepository.findByUserId(id);
+        User user = this.userRepository.findUserById(id);
+        UserProfile userProfile = this.userProfileRepository.findByUserId(id);
+        List<Message> messages = this.messageRepository.findAllBySender_IdContains(id);
+        List<User> allByFriendsIdContains = this.userRepository.findAllByFriendsIdContains(id);
+
+        if (!allByFriendsIdContains.isEmpty()) {
+
+            for (User allByFriendsIdContain : allByFriendsIdContains) {
+                allByFriendsIdContain.getFriends().remove(user);
+            }
+            user.getFriends().removeAll(allByFriendsIdContains);
+            user = this.userRepository.saveAndFlush(this.modelMapper.map(user, User.class));
+        }
+
+        if (!messages.isEmpty()) {
+            this.messageRepository.deleteAll(messages);
+        }
 
         user.getAuthorities().remove(user);
         this.userProfileRepository.delete(userProfile);
