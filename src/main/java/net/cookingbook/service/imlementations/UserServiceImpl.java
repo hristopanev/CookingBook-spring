@@ -120,9 +120,10 @@ public class UserServiceImpl implements UserService {
         if (!comments.isEmpty()) {
             for (Comment comment : comments) {
                 if (comment.getUserComment().contains(user)) {
-                    comment.getUserComment().remove(user);
                     Post post = this.postRepository.findByCommentsContains(comment);
+                    comment.getUserComment().remove(user);
                     post.getComments().remove(comment);
+                    this.commentRepository.delete(comment);
                 }
             }
         }
