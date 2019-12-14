@@ -38,7 +38,7 @@ class PostServiceTest extends TestBase {
         post.setUploader(user);
         service.createPost(post);
 
-        assertEquals(user.getId(), post.getUploader().getId());
+        assertEquals("1", post.getUploader().getId());
 
     }
 

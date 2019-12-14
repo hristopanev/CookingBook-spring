@@ -4,10 +4,7 @@ import net.cookingbook.base.TestBase;
 import net.cookingbook.data.repository.CommentRepository;
 import net.cookingbook.service.CommentService;
 import net.cookingbook.service.models.services.CommentServiceModel;
-import net.cookingbook.service.models.services.PostServiceModel;
-import net.cookingbook.service.models.services.UserServiceModel;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;

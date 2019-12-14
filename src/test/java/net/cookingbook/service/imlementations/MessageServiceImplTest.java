@@ -42,7 +42,7 @@ class MessageServiceImplTest extends TestBase {
         message.setSender(sender);
         service.sendMessage(message);
 
-        assertEquals(sender.getId(), message.getSender().getId());
+        assertEquals("2", message.getSender().getId());
 
     }
 }
