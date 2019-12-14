@@ -1,15 +1,9 @@
 package net.cookingbook.service.imlementations;
 
-import net.cookingbook.data.models.Comment;
-import net.cookingbook.data.models.Group;
-import net.cookingbook.data.models.Post;
-import net.cookingbook.data.models.Rate;
-import net.cookingbook.data.repository.CommentRepository;
-import net.cookingbook.data.repository.GroupRepository;
-import net.cookingbook.data.repository.RateRepository;
+import net.cookingbook.data.models.*;
+import net.cookingbook.data.repository.*;
 import net.cookingbook.errors.PostNotFoundException;
 import net.cookingbook.service.models.services.PostServiceModel;
-import net.cookingbook.data.repository.PostRepository;
 import net.cookingbook.service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +19,16 @@ public class PostServiceImpl implements PostService {
     private final RateRepository rateRepository;
     private final GroupRepository groupRepository;
     private final CommentRepository commentRepository;
+    private final SavedRecipeRepository savedRecipeRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, RateRepository rateRepository, GroupRepository groupRepository, CommentRepository commentRepository, ModelMapper modelMapper) {
+    public PostServiceImpl(PostRepository postRepository, RateRepository rateRepository, GroupRepository groupRepository, CommentRepository commentRepository, SavedRecipeRepository savedRecipeRepository, ModelMapper modelMapper) {
         this.postRepository = postRepository;
         this.rateRepository = rateRepository;
         this.groupRepository = groupRepository;
         this.commentRepository = commentRepository;
+        this.savedRecipeRepository = savedRecipeRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -80,6 +76,7 @@ public class PostServiceImpl implements PostService {
                 .orElseThrow(() -> new PostNotFoundException("Post with the given id was not found"));
         Rate rate = this.rateRepository.findByPost_idContains(id);
         Comment comment = this.commentRepository.findByPostComment_idContains(post.getId());
+        List<SavedRecipe> savedRecipe = this.savedRecipeRepository.findAllByPost_IdContains(id);
 
         Group group = this.groupRepository.findByPosts_IdContains(id);
 
@@ -93,6 +90,13 @@ public class PostServiceImpl implements PostService {
         if (rate.getCount() > 0) {
             this.rateRepository.delete(rate);
         }
+
+        if (!savedRecipe.isEmpty()) {
+            for (SavedRecipe recipe : savedRecipe) {
+                this.savedRecipeRepository.delete(recipe);
+            }
+        }
+
         this.postRepository.delete(post);
     }
 
