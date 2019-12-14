@@ -10,4 +10,6 @@ import java.util.List;
 public interface SavedRecipeRepository extends JpaRepository<SavedRecipe, String> {
 
     List<SavedRecipe> findByUser_IdContains(String id);
+
+    List<SavedRecipe> findAllByPost_IdContains(String id);
 }

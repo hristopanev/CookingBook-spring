@@ -1,12 +1,8 @@
 package net.cookingbook.service.imlementations;
 
-import net.cookingbook.data.models.Message;
-import net.cookingbook.data.models.User;
-import net.cookingbook.data.models.UserProfile;
-import net.cookingbook.data.repository.MessageRepository;
-import net.cookingbook.data.repository.UserProfileRepository;
+import net.cookingbook.data.models.*;
+import net.cookingbook.data.repository.*;
 import net.cookingbook.service.models.services.UserServiceModel;
-import net.cookingbook.data.repository.UserRepository;
 import net.cookingbook.service.RoleService;
 import net.cookingbook.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -26,15 +22,27 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
     private final MessageRepository messageRepository;
+    private final SavedRecipeRepository savedRecipeRepository;
+    private final GroupRepository groupRepository;
+    private final RateRepository rateRepository;
+    private final CommentRepository commentRepository;
+    private final NoteRepository noteRepository;
+    private final PostRepository postRepository;
     private final RoleService roleService;
     private final ModelMapper modelMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserProfileRepository userProfileRepository, MessageRepository messageRepository, RoleService roleService, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, UserProfileRepository userProfileRepository, MessageRepository messageRepository, SavedRecipeRepository savedRecipeRepository, GroupRepository groupRepository, RateRepository rateRepository, CommentRepository commentRepository, NoteRepository noteRepository, PostRepository postRepository, RoleService roleService, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.userProfileRepository = userProfileRepository;
         this.messageRepository = messageRepository;
+        this.savedRecipeRepository = savedRecipeRepository;
+        this.groupRepository = groupRepository;
+        this.rateRepository = rateRepository;
+        this.commentRepository = commentRepository;
+        this.noteRepository = noteRepository;
+        this.postRepository = postRepository;
         this.roleService = roleService;
         this.modelMapper = modelMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -65,8 +73,15 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(String id) {
         User user = this.userRepository.findUserById(id);
         UserProfile userProfile = this.userProfileRepository.findByUserId(id);
-        List<Message> messages = this.messageRepository.findAllBySender_IdContains(id);
+        List<Message> sender = this.messageRepository.findAllBySender_IdContains(id);
+        List<Message> userMessages = this.messageRepository.findAllByUser_IdContains(id);
         List<User> allByFriendsIdContains = this.userRepository.findAllByFriendsIdContains(id);
+        List<SavedRecipe> savedRecipes = this.savedRecipeRepository.findByUser_IdContains(id);
+        List<Group> groups = this.groupRepository.findAllByUsers_IdContains(id);
+        List<Rate> rates = this.rateRepository.findAllByUser_IdContains(id);
+        List<Comment> comments = this.commentRepository.findAllByUserCommentContains(user);
+        List<Note> notes = this.noteRepository.findAllByUser_IdContains(id);
+        List<Post> posts = this.postRepository.findByUploader_IdContainsOrderByPostTimeDesc(id);
 
         if (!allByFriendsIdContains.isEmpty()) {
 
@@ -77,8 +92,63 @@ public class UserServiceImpl implements UserService {
             user = this.userRepository.saveAndFlush(this.modelMapper.map(user, User.class));
         }
 
-        if (!messages.isEmpty()) {
-            this.messageRepository.deleteAll(messages);
+        if (!userMessages.isEmpty()) {
+            this.messageRepository.deleteAll(userMessages);
+        }
+
+        if (!sender.isEmpty()) {
+            this.messageRepository.deleteAll(sender);
+        }
+
+        if (!savedRecipes.isEmpty()) {
+            this.savedRecipeRepository.deleteAll(savedRecipes);
+        }
+
+        if (!groups.isEmpty()) {
+            for (Group group : groups) {
+                if (group.getUsers().contains(user)) {
+                    group.getUsers().remove(user);
+                }
+            }
+        }
+
+        if (!rates.isEmpty()) {
+            for (Rate rate : rates) {
+                rate.getUser().remove(user);
+            }
+        }
+        if (!comments.isEmpty()) {
+            for (Comment comment : comments) {
+                if (comment.getUserComment().contains(user)) {
+                    comment.getUserComment().remove(user);
+                    Post post = this.postRepository.findByCommentsContains(comment);
+                    post.getComments().remove(comment);
+                }
+            }
+        }
+
+        if (!posts.isEmpty()) {
+            for (Post post : posts) {
+                List<SavedRecipe> savedRec = this.savedRecipeRepository.findAllByPost_IdContains(post.getId());
+                List<Comment> allCommentsPost = this.commentRepository.findAllByPostCommentContains(post);
+
+                if (!savedRec.isEmpty()) {
+                    this.savedRecipeRepository.deleteAll(savedRec);
+                }
+                if (!allCommentsPost.isEmpty()) {
+                    this.commentRepository.deleteAll(allCommentsPost);
+                }
+
+                if (post.getRate().getCount() > 0) {
+                    Rate rate = this.rateRepository.findByPost_idContains(post.getId());
+                    this.rateRepository.delete(rate);
+                }
+            }
+            this.postRepository.deleteAll(posts);
+        }
+
+        if (!notes.isEmpty()) {
+            this.noteRepository.deleteAll();
         }
 
         user.getAuthorities().remove(user);

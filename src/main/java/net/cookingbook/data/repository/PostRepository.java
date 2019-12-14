@@ -1,5 +1,6 @@
 package net.cookingbook.data.repository;
 
+import net.cookingbook.data.models.Comment;
 import net.cookingbook.data.models.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,4 +24,6 @@ public interface PostRepository extends JpaRepository<Post, String > {
     Post findPostById(String id);
 
     List<Post> findAllByGroups_IdContainsOrderByPostTimeDesc(String id);
+
+    Post findByCommentsContains(Comment comment);
 }

@@ -60,7 +60,6 @@
                             <a class="post-username" th:href="@{/users/details/{id}(id=${post.uploader.id})}"
                                th:utext="${post.uploader.username}"></a>
                         </th:block>
-                        <!--                        <h5 class="text-center" th:utext="${#strings.substring(post.postTime, 0,10)}"></h5>-->
                         <h5 class="text-center" th:utext="${#dates.format(post.postTime, 'dd-MM-yyyy')}"></h5>
                         <h5 class="text-center" th:utext="${post.name}"></h5>
                         <img th:src="${post.imageUrl}" class="img-thumbnail" width="300" height="300">

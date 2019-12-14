@@ -6,6 +6,8 @@ import net.cookingbook.data.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface RateRepository extends JpaRepository<Rate, String> {
 
@@ -14,4 +16,6 @@ public interface RateRepository extends JpaRepository<Rate, String> {
     Rate findByPost_idContains(String id);
 
     Rate findByPost(Post post);
+
+    List<Rate> findAllByUser_IdContains(String id);
 }
