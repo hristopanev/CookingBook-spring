@@ -77,7 +77,7 @@ public class RegisterAndLoginUserController extends BaseController {
 
     @GetMapping("/login")
     public ModelAndView login() {
-        return super.view("/users/login");
+        return super.view("users/login");
     }
 
     @PostMapping("/login")
