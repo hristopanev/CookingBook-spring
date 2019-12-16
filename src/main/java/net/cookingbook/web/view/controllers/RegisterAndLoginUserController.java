@@ -65,7 +65,7 @@ public class RegisterAndLoginUserController extends BaseController {
             model.setConfirmPassword(null);
             modelAndView.addObject("model", model);
 
-            return super.view("/users/user-register", modelAndView);
+            return super.view("users/user-register", modelAndView);
         }
         UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
         this.userService.registerUser(userServiceModel);
