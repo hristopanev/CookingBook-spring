@@ -19,18 +19,18 @@
                 </div>
                 <div class="form-group">
                     <div class="form-group">
-                        <div class="label mt-4">
+                        <div class="label mt-4 text-center">
                             <img th:src="${post.imageUrl}" class="img-thumbnail" width="300" height="300" alt="Post" >
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="add-recipe-product" class="font-weight-bold">Recipe products</label>
+                    <label for="add-recipe-product" class="font-weight-bold">Recipe ingredients</label>
                     <textarea class="form-control" id="add-recipe-product" aria-label="With textarea"
                               name="products"  th:text="${post.products}" disabled></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="add-recipe-description" class="font-weight-bold">Recipe description</label>
+                    <label for="add-recipe-description" class="font-weight-bold">Recipe preparation</label>
                     <textarea class="form-control" id="add-recipe-description" aria-label="With textarea" name="description"
                               th:text="${post.description}" disabled></textarea>
                 </div>

@@ -31,14 +31,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="add-recipe-product" class="font-weight-bold">Write recipe products</label>
+                    <label for="add-recipe-product" class="font-weight-bold">Write recipe ingredients</label>
                     <textarea class="form-control" id="add-recipe-product" aria-label="With textarea" name="products" th:value="*{products}"></textarea>
                     <th:block th:if="${#fields.hasErrors('products')}">
                         <small class="error" th:errors="*{products}"></small>
                     </th:block>
                 </div>
                 <div class="form-group">
-                    <label for="add-recipe-description" class="font-weight-bold">Write recipe description</label>
+                    <label for="add-recipe-description" class="font-weight-bold">Write recipe preparation</label>
                     <textarea class="form-control" id="add-recipe-description" aria-label="With textarea" name="description" th:value="*{description}"></textarea>
                     <th:block th:if="${#fields.hasErrors('description')}">
                         <small class="error" th:errors="*{description}"></small>
