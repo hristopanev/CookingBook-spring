@@ -31,8 +31,8 @@ public class GroupCreateValidator implements org.springframework.validation.Vali
         if (groupCreateBindingModel.getName().length() < 3) {
             errors.rejectValue(
                     "name",
-                    ValidationConstants.NAME_LENGTH,
-                    ValidationConstants.NAME_LENGTH
+                    ValidationConstants.GROUP_NAME_LENGTH,
+                    ValidationConstants.GROUP_NAME_LENGTH
             );
         }
 
