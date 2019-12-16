@@ -33,29 +33,26 @@ public class RegisterAndLoginUserController extends BaseController {
 
     @PostMapping("/register")
     @PreAuthorize("isAnonymous()")
-    public ModelAndView registerConfirm(ModelAndView modelAndView, @ModelAttribute(name = "model") UserRegisterBindingModel model, BindingResult bindingResult) {
+    public ModelAndView registerConfirm(@ModelAttribute(name = "model") UserRegisterBindingModel model,  BindingResult bindingResult) {
 
-        boolean userIsValid = this.userService.isPresent(this.modelMapper.map(model, UserServiceModel.class));
+        this.userRegisterValidator.validate(model, bindingResult);
 
-        if (!userIsValid) {
-            return super.view("/users/user-register");
+        if (bindingResult.hasErrors()) {
+            return super.redirect("/user-register");
         }
 
-        if (!model.getPassword().equals(model.getConfirmPassword())) {
-            return super.view("users/user-register");
-        }
         UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
         this.userService.registerUser(userServiceModel);
 
 
-        return super.redirect("users/login");
+        return super.redirect("login");
     }
 
     @GetMapping("/user-register")
     @PreAuthorize("isAnonymous()")
     public ModelAndView userRegister(ModelAndView modelAndView, @ModelAttribute(name = "model") UserRegisterBindingModel model) {
         modelAndView.addObject("model", model);
-        return super.view("/users/user-register");
+        return super.view("/users/user-register", modelAndView);
     }
 
     @PostMapping("/user-register")

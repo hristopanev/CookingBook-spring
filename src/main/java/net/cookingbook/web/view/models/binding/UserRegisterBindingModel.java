@@ -2,6 +2,8 @@ package net.cookingbook.web.view.models.binding;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class UserRegisterBindingModel {
 
@@ -31,8 +33,9 @@ public class UserRegisterBindingModel {
         this.lastName = lastName;
     }
 
-    @NotEmpty
-    @NotNull
+    @NotEmpty(message = "Username name cannot be empty")
+    @Size(min = 2, max = 30, message = "Username should be between 2 and 30")
+    @Pattern(regexp = "")
     public String getUsername() {
         return this.username;
     }
@@ -41,6 +44,7 @@ public class UserRegisterBindingModel {
         this.username = username;
     }
 
+    @NotEmpty(message = "Password cannot be empty")
     public String getPassword() {
         return this.password;
     }
@@ -48,6 +52,7 @@ public class UserRegisterBindingModel {
     public void setPassword(String password) {
         this.password = password;
     }
+    @NotEmpty(message = "Password cannot be empty")
 
     public String getConfirmPassword() {
         return this.ConfirmPassword;
@@ -57,6 +62,7 @@ public class UserRegisterBindingModel {
         ConfirmPassword = confirmPassword;
     }
 
+    @NotEmpty(message = "Password cannot be empty")
     public String getEmail() {
         return this.email;
     }

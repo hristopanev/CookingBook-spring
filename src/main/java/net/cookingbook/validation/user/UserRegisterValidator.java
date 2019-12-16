@@ -34,7 +34,7 @@ public class UserRegisterValidator implements org.springframework.validation.Val
             );
         }
 
-        if (userRegisterBindingModel.getUsername().length() < 3 || userRegisterBindingModel.getUsername().length() > 10) {
+        if (userRegisterBindingModel.getUsername().length() < 3 || userRegisterBindingModel.getUsername().length() > 20) {
             errors.rejectValue(
                     "username",
                     ValidationConstants.USERNAME_LENGTH,
@@ -42,11 +42,31 @@ public class UserRegisterValidator implements org.springframework.validation.Val
             );
         }
 
-        if (!userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
+        try {
+            if (!userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
+                errors.rejectValue(
+                        "password",
+                        ValidationConstants.PASSWORDS_DO_NOT_MATCH,
+                        ValidationConstants.PASSWORDS_DO_NOT_MATCH
+                );
+            }
+        } catch (Exception ignored) {
+
+        }
+
+        if (userRegisterBindingModel.getPassword() == null || userRegisterBindingModel.getConfirmPassword() == null) {
             errors.rejectValue(
                     "password",
-                    ValidationConstants.PASSWORDS_DO_NOT_MATCH,
-                    ValidationConstants.PASSWORDS_DO_NOT_MATCH
+                    ValidationConstants.PASSWORD_CANNOT_BE_EMPTY,
+                    ValidationConstants.PASSWORD_CANNOT_BE_EMPTY
+            );
+        }
+
+        if (userRegisterBindingModel.getEmail() == null) {
+            errors.rejectValue(
+                    "email",
+                    ValidationConstants.EMAIL_CANNOT_BE_EMPTY,
+                    ValidationConstants.EMAIL_CANNOT_BE_EMPTY
             );
         }
 

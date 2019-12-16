@@ -1,5 +1,7 @@
 package net.cookingbook.validation;
 
+import java.security.PublicKey;
+
 public class ValidationConstants {
 
     /* USERS */
@@ -19,6 +21,10 @@ public class ValidationConstants {
     public final static String NAME_LENGTH = "Name must contain at least 3 characters!";
 
     public final static String NAME_ALREADY_EXISTS = "%s with name %s already exists!";
+
+    public final static String EMAIL_CANNOT_BE_EMPTY = "Email cannot be empty";
+
+    public final static String PASSWORD_CANNOT_BE_EMPTY = "Password cannot be empty";
 
 
     /* POSTS */

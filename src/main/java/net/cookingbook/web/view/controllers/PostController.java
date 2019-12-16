@@ -50,6 +50,7 @@ public class PostController extends BaseController {
     }
 
     @GetMapping("/add")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ModelAndView addPost(ModelAndView modelAndView, @ModelAttribute(name = "model") PostCreateBindingModel model, Principal principal) {
         modelAndView.addObject("username", principal.getName());
 
