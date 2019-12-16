@@ -84,9 +84,9 @@ public class GroupController extends BaseController {
     }
 
     @GetMapping("/group/{id}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ModelAndView group(Principal principal, @PathVariable String id, ModelAndView modelAndView) {
-        var user = userService.findUserByUserName(principal.getName());
+        var user = getUsername(principal);
         var description = this.groupService.findById(id).getDescription();
         var isJoined = this.groupService.isJoined(id, user);
 
@@ -98,7 +98,7 @@ public class GroupController extends BaseController {
         modelAndView.addObject("description", description);
         modelAndView.addObject("posts", posts);
 
-        return super.view("/groups/group", modelAndView);
+        return super.view("groups/group", modelAndView);
     }
 
     @PostMapping("/join/{id}")
