@@ -32,19 +32,9 @@ public class RegisterAndLoginUserController extends BaseController {
     }
 
     @PostMapping("/register")
-    public ModelAndView registerConfirm(@ModelAttribute(name = "model") UserRegisterBindingModel model,  BindingResult bindingResult) {
+    public ModelAndView registerConfirm(ModelAndView modelAndView, @ModelAttribute(name = "model") UserRegisterBindingModel model,  BindingResult bindingResult) {
 
-        this.userRegisterValidator.validate(model, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            return super.redirect("/user-register");
-        }
-
-        UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
-        this.userService.registerUser(userServiceModel);
-
-
-        return super.redirect("login");
+        return getModelAndView(modelAndView, model, bindingResult);
     }
 
     @GetMapping("/user-register")
@@ -56,19 +46,7 @@ public class RegisterAndLoginUserController extends BaseController {
     @PostMapping("/user-register")
     public ModelAndView registerIncorrect(ModelAndView modelAndView, @ModelAttribute(name = "model") UserRegisterBindingModel model, BindingResult bindingResult) {
 
-        this.userRegisterValidator.validate(model, bindingResult);
-        if (bindingResult.hasErrors()) {
-            model.setPassword(null);
-            model.setConfirmPassword(null);
-            modelAndView.addObject("model", model);
-
-            return super.view("users/user-register", modelAndView);
-        }
-        UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
-        this.userService.registerUser(userServiceModel);
-
-
-        return super.redirect("login");
+        return getModelAndView(modelAndView, model, bindingResult);
     }
 
 
@@ -82,6 +60,21 @@ public class RegisterAndLoginUserController extends BaseController {
         return super.redirect("/home");
     }
 
+    private ModelAndView getModelAndView(ModelAndView modelAndView, @ModelAttribute(name = "model") UserRegisterBindingModel model, BindingResult bindingResult) {
+        this.userRegisterValidator.validate(model, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.setPassword(null);
+            model.setConfirmPassword(null);
+            modelAndView.addObject("model", model);
+            return super.view("users/user-register", modelAndView);
+        }
+
+        UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
+        this.userService.registerUser(userServiceModel);
+
+
+        return super.redirect("login");
+    }
 
     @InitBinder
     private void initBinder(WebDataBinder webDataBinder) {
