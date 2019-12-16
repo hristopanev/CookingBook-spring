@@ -42,20 +42,20 @@ public class RegisterAndLoginUserController extends BaseController {
         }
 
         if (!model.getPassword().equals(model.getConfirmPassword())) {
-            return super.view("user-register");
+            return super.view("users/user-register");
         }
         UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
         this.userService.registerUser(userServiceModel);
 
 
-        return super.redirect("/login");
+        return super.redirect("users/login");
     }
 
     @GetMapping("/user-register")
     @PreAuthorize("isAnonymous()")
     public ModelAndView userRegister(ModelAndView modelAndView, @ModelAttribute(name = "model") UserRegisterBindingModel model) {
         modelAndView.addObject("model", model);
-        return super.view("users/user-register");
+        return super.view("/users/user-register");
     }
 
     @PostMapping("/user-register")
@@ -74,7 +74,7 @@ public class RegisterAndLoginUserController extends BaseController {
         this.userService.registerUser(userServiceModel);
 
 
-        return super.redirect("/login");
+        return super.redirect("users/login");
     }
 
 
