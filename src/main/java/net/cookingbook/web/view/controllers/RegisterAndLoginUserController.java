@@ -10,7 +10,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -23,15 +22,13 @@ public class RegisterAndLoginUserController extends BaseController {
     private final UserService userService;
     private final ModelMapper modelMapper;
     private final UserRegisterValidator userRegisterValidator;
-    private final UserLoginValidator userLoginValidator;
 
     @Autowired
-    public RegisterAndLoginUserController(UserService userService, ModelMapper modelMapper, UserRegisterValidator userRegisterValidator, UserLoginValidator userLoginValidator) {
+    public RegisterAndLoginUserController(UserService userService, ModelMapper modelMapper, UserRegisterValidator userRegisterValidator) {
         super(userService);
         this.userService = userService;
         this.modelMapper = modelMapper;
         this.userRegisterValidator = userRegisterValidator;
-        this.userLoginValidator = userLoginValidator;
     }
 
     @PostMapping("/register")
@@ -71,7 +68,7 @@ public class RegisterAndLoginUserController extends BaseController {
         this.userService.registerUser(userServiceModel);
 
 
-        return super.redirect("users/login");
+        return super.redirect("login");
     }
 
 
