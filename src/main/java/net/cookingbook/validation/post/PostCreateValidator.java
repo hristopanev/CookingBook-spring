@@ -4,8 +4,15 @@ import net.cookingbook.data.repository.PostRepository;
 import net.cookingbook.validation.ValidationConstants;
 import net.cookingbook.validation.annotation.Validator;
 import net.cookingbook.web.view.models.binding.PostCreateBindingModel;
+import org.apache.tomcat.jni.FileInfo;
+import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
+import java.io.File;
+import java.io.IOException;
 
 @Validator
 public class PostCreateValidator implements org.springframework.validation.Validator {
@@ -40,6 +47,18 @@ public class PostCreateValidator implements org.springframework.validation.Valid
                     ValidationConstants.POST_IMAGE,
                     ValidationConstants.POST_IMAGE
             );
+        }
+
+        try {
+            if (postCreateBindingModel.getImage().getSize() > 1572864) {
+                errors.rejectValue(
+                        "image",
+                        ValidationConstants.POST_IMAGE_LARGER,
+                        ValidationConstants.POST_IMAGE_LARGER
+                );
+            }
+        } catch (Exception ignored) {
+
         }
 
         if (postCreateBindingModel.getProducts().length() < 5) {

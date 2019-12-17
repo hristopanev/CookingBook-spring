@@ -8,6 +8,8 @@ public class ValidationConstants {
 
     public final static String USERNAME_ALREADY_EXISTS = "Username %s already exists!";
 
+    public final static String USERNAME_EMPTY = "Username can not be empty!";
+
     public final static String USERNAME_LENGTH = "Username must be between 3 and 10 characters long!";
 
     public final static String PASSWORD_LENGTH = "Password must be between 5 and 10 characters long!";
@@ -24,9 +26,9 @@ public class ValidationConstants {
 
     public final static String NAME_ALREADY_EXISTS = "%s with name %s already exists!";
 
-    public final static String EMAIL_CANNOT_BE_EMPTY = "Email cannot be empty!";
+    public final static String EMAIL_CANNOT_BE_EMPTY = "Email can not be empty!";
 
-    public final static String PASSWORD_CANNOT_BE_EMPTY = "Password cannot be empty!";
+    public final static String PASSWORD_CANNOT_BE_EMPTY = "Password can not be empty!";
 
 
     /* POSTS */
@@ -34,6 +36,12 @@ public class ValidationConstants {
     public final static String POST_NAME_LENGTH = "Recipe name must be between 2 and 30 characters long!";
 
     public final static String POST_IMAGE = "Recipe image can not be empty!";
+
+    public final static String POST_IMAGE_LARGER = "Image can not be larger at 1,5MB";
+
+    public final static String POST_INGREDIENTS = "Recipe ingredients can not be empty";
+
+    public final static String POST_PREPARATION = "Recipe preparation can not be empty";
 
     public final static String POST_PRODUCTS_LENGTH = "Recipe ingredients must be min 5 characters long!";
 

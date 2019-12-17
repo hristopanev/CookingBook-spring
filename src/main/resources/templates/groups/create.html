@@ -14,7 +14,7 @@
         <div class="recept-form container">
             <form id="add-recipe-form" class="form w-15 mx-auto" th:action="@{/groups/create}" method="post" th:object="${model}">
                 <div class="form-group">
-                    <label for="add-recipe-name" class="font-weight-bold">Name</label>
+                    <label for="add-recipe-name" class="font-weight-bold">Name <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="add-recipe-name" name="name" th:value="*{name}">
                     <th:block th:if="${#fields.hasErrors('name')}">
                         <small class="error text-danger" th:errors="*{name}"></small>

@@ -26,20 +26,32 @@ public class UserRegisterValidator implements org.springframework.validation.Val
     public void validate(Object o, Errors errors) {
         UserRegisterBindingModel userRegisterBindingModel = (UserRegisterBindingModel) o;
 
-        if (this.userRepository.findByUsername(userRegisterBindingModel.getUsername()).isPresent()) {
+        if (userRegisterBindingModel.getUsername() == null) {
             errors.rejectValue(
                     "username",
-                    String.format(ValidationConstants.USERNAME_ALREADY_EXISTS, userRegisterBindingModel.getUsername()),
-                    String.format(ValidationConstants.USERNAME_ALREADY_EXISTS, userRegisterBindingModel.getUsername())
+                    ValidationConstants.USERNAME_EMPTY,
+                    ValidationConstants.USERNAME_EMPTY
             );
         }
 
-        if (userRegisterBindingModel.getUsername().length() < 3 || userRegisterBindingModel.getUsername().length() > 20) {
-            errors.rejectValue(
-                    "username",
-                    ValidationConstants.USERNAME_LENGTH,
-                    ValidationConstants.USERNAME_LENGTH
-            );
+        try {
+            if (this.userRepository.findByUsername(userRegisterBindingModel.getUsername()).isPresent()) {
+                errors.rejectValue(
+                        "username",
+                        String.format(ValidationConstants.USERNAME_ALREADY_EXISTS, userRegisterBindingModel.getUsername()),
+                        String.format(ValidationConstants.USERNAME_ALREADY_EXISTS, userRegisterBindingModel.getUsername())
+                );
+            }
+
+            if (userRegisterBindingModel.getUsername().length() < 3 || userRegisterBindingModel.getUsername().length() > 20) {
+                errors.rejectValue(
+                        "username",
+                        ValidationConstants.USERNAME_LENGTH,
+                        ValidationConstants.USERNAME_LENGTH
+                );
+            }
+        }catch (Exception ignored) {
+
         }
 
         try {
@@ -70,7 +82,7 @@ public class UserRegisterValidator implements org.springframework.validation.Val
                         ValidationConstants.PASSWORD_LENGTH
                 );
             }
-        }catch (Exception ignored) {
+        } catch (Exception ignored) {
 
         }
 
