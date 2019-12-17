@@ -1,4 +1,5 @@
-# CookingBook
+# CookingBook Is My First Spring Boot Web Application
+https://cookingbook-net.herokuapp.com/
 
 - Post and share your cooking recipe
 - Follow your friends
