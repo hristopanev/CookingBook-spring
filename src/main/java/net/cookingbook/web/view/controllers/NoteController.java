@@ -124,6 +124,6 @@ public class NoteController extends BaseController {
 
         this.noteService.editNote(id, noteServiceModel);
 
-        return super.redirect("notes/details/" + id);
+        return super.redirect("/notes/details/" + id);
     }
 }
