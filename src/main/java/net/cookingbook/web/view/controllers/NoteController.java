@@ -114,7 +114,7 @@ public class NoteController extends BaseController {
         modelAndView.addObject("noteId", id);
         modelAndView.addObject("username", user.getUsername());
 
-        return super.view("/notes/edit-note", modelAndView);
+        return super.view("notes/edit-note", modelAndView);
     }
 
     @PostMapping("/edit/{id}")
@@ -124,6 +124,6 @@ public class NoteController extends BaseController {
 
         this.noteService.editNote(id, noteServiceModel);
 
-        return super.redirect("/notes/details/" + id);
+        return super.redirect("notes/details/" + id);
     }
 }
