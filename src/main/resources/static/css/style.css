@@ -62,6 +62,12 @@ body, html {
 /*    border: 2px solid #C2FFCA;*/
 /*}*/
 
+.nav-menu {
+    /*background: rgba(22, 44, 32, 0.5);*/
+    background: #425053;
+    color: #00af00;
+}
+
 .navbar {
     padding: 0.3rem 1rem;
 }
