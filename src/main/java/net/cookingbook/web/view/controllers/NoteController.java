@@ -52,7 +52,7 @@ public class NoteController extends BaseController {
         note.setCreateTime(new Date());
         this.noteService.createNote(note);
 
-        return super.redirect("all");
+        return super.redirect("/note/all");
     }
 
     @GetMapping("/all")

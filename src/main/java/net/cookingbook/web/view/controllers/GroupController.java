@@ -134,7 +134,7 @@ public class GroupController extends BaseController {
         modelAndView.addObject("groupID", group.getId());
         modelAndView.addObject("username", principal.getName());
 
-        return super.view("/groups/edit-group", modelAndView);
+        return super.view("groups/edit-group", modelAndView);
     }
 
     @PostMapping("/edit/{id}")

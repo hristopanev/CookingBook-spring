@@ -111,7 +111,7 @@ public class UserController extends BaseController {
 
         this.userService.editUserProfile(userServiceModel);
 
-        return super.redirect("profile");
+        return super.redirect("/users/profile");
     }
 
     @PostMapping("/follow/{id}")
