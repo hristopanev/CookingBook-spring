@@ -14,7 +14,7 @@ public class ValidationConstants {
 
     public final static String PASSWORD_LENGTH = "Password must be between 5 and 10 characters long!";
 
-    public final static String PASSWORDS_DO_NOT_MATCH = "Passwords don't match!";
+    public final static String PASSWORDS_DO_NOT_MATCH = "Passwords and Confirm Password don't match!";
 
     public final static String EMAIL_ALREADY_EXISTS = "Email %s already exists!";
 
@@ -28,7 +28,7 @@ public class ValidationConstants {
 
     public final static String EMAIL_CANNOT_BE_EMPTY = "Email can not be empty!";
 
-    public final static String PASSWORD_CANNOT_BE_EMPTY = "Password can not be empty!";
+    public final static String PASSWORD_CANNOT_BE_EMPTY = "Password and Confirm Password can not be empty!";
 
 
     /* POSTS */

@@ -36,11 +36,12 @@
                     <div class="form-group">
                         <label for="confirmPassword">Confirm Password<span class="text-danger">*</span></label>
                         <input type="password" class="form-control" id="confirmPassword"
-                               placeholder="Confirm Password..." name="confirmPassword" th:value="*{confirmPassword}">
-                        <th:block th:if="${#fields.hasErrors('password')}">
-                            <small class="error text-danger" th:errors="*{password}"></small>
+                               placeholder="Confirm Password..." name="confirmPassword">
+<!--                        th:value="*{confirmPassword}"-->
+<!--                        <th:block th:if="${#fields.hasErrors('password')}">-->
+<!--                            <small class="error text-danger" th:errors="*{password}"></small>-->
 
-                        </th:block>
+<!--                        </th:block>-->
                     </div>
                     <div class="form-group">
                         <label for="email">Email<span class="text-danger">*</span></label>
