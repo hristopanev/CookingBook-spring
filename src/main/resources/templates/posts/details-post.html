@@ -81,7 +81,7 @@
         <th:block th:each="comment, iter : ${postComment}">
             <ul class="comment-form">
                 <li>
-                    <h6 th:utext="${#dates.format(comment.postComment.get(0).postTime, 'dd-MM-yyyy')}"></h6>
+                    <h6 th:utext="${#dates.format(comment.commentDate, 'dd-MM-yyyy')}"></h6>
                     <a class="post-username"
                        th:href="@{/users/details/{id}(id=${comment.userComment.get(0).Id})}"
                        th:text="${comment.userComment.get(0).username}"></a>

@@ -1,6 +1,5 @@
 package net.cookingbook.web.view.controllers;
 
-import net.cookingbook.validation.user.UserLoginValidator;
 import net.cookingbook.validation.user.UserRegisterValidator;
 import net.cookingbook.web.base.BaseController;
 import net.cookingbook.web.view.models.binding.UserRegisterBindingModel;
